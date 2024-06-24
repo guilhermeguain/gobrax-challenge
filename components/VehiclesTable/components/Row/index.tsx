@@ -1,19 +1,45 @@
+import { useCallback, useMemo } from "react";
 import { Text } from "react-native";
-import { DataTable } from "react-native-paper";
+import { DataTable, Checkbox } from "react-native-paper";
 
 import { VehicleProps } from "@/services/jsonServer/vehicle/types";
 
-export const Row = (driver: VehicleProps) => {
+import { useAppDispatch, useAppSelector } from "@/store";
+import { VehicleActions } from "@/store/vehicle";
+
+export const Row = (vehicle: VehicleProps) => {
+  const dispatch = useAppDispatch();
+  const { activeVehicle } = useAppSelector((state) => state.vehicle);
+
+  const status = useMemo(
+    () => (activeVehicle?.id === vehicle.id ? "checked" : "unchecked"),
+    [activeVehicle]
+  );
+
+  const handleVehicleSelect = useCallback(
+    (vehicle: VehicleProps) => {
+      const isSelected = activeVehicle?.id === vehicle.id;
+      const updatedSelectedVehicle = isSelected ? undefined : vehicle;
+
+      dispatch(VehicleActions.setActiveVehicle(updatedSelectedVehicle));
+    },
+    [activeVehicle, dispatch]
+  );
+
   return (
-    <DataTable.Row key={driver.id}>
+    <DataTable.Row key={vehicle.id}>
       <DataTable.Cell>
-        <Text>{driver.id}</Text>
+        <Checkbox
+          status={status}
+          onPress={() => handleVehicleSelect(vehicle)}
+        />
+        <Text>{vehicle.id}</Text>
       </DataTable.Cell>
       <DataTable.Cell>
-        <Text>{driver.brand}</Text>
+        <Text>{vehicle.brand}</Text>
       </DataTable.Cell>
       <DataTable.Cell>
-        <Text>{driver.plate}</Text>
+        <Text>{vehicle.plate}</Text>
       </DataTable.Cell>
     </DataTable.Row>
   );
