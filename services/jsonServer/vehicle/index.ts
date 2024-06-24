@@ -104,6 +104,6 @@ export const deleteVehicle = async (id: string) => {
   } catch (error) {
     console.log(error, "deleteVehicleError");
 
-    return false;
+    return null;
   }
 };
