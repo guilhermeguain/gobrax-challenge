@@ -8,6 +8,10 @@ import {
   MD3Colors,
   Snackbar,
 } from "react-native-paper";
+import { FieldErrors } from "react-hook-form";
+
+import { DriverProps } from "@/services/jsonServer/driver/types";
+import { VehicleProps } from "@/services/jsonServer/vehicle/types";
 
 import { useAppDispatch, useAppSelector } from "@/store";
 import { DriverActions } from "@/store/driver";
@@ -16,12 +20,9 @@ import { createDriver, deleteDriver, updateDriver } from "@/store/services";
 import { When } from "@/components/shared/When";
 
 import { DriverForm } from "@/components/DriverForm";
+import { DriverFormSchemaProps } from "@/components/DriverForm/types";
 
 import { SnackBarProps } from "./types";
-import { DriverProps } from "@/services/jsonServer/driver/types";
-import { VehicleProps } from "@/services/jsonServer/vehicle/types";
-import { FieldErrors } from "react-hook-form";
-import { DriverFormSchemaProps } from "../DriverForm/types";
 
 export const DriversActions = () => {
   const dispatch = useAppDispatch();
