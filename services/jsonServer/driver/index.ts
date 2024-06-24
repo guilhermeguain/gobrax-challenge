@@ -40,12 +40,12 @@ export const getDrivers = async () => {
   }
 };
 
-export const createDriver = async (driver: Exclude<DriverProps, "id">) => {
+export const createDriver = async (driver: Exclude<DriverProps, ["id"]>) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/drivers`;
 
   try {
     const response = await fetch(url, {
-      method: "post",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(driver),
     });
@@ -69,13 +69,13 @@ export const updateDriver = async (driver: DriverProps) => {
 
   try {
     const response = await fetch(url, {
-      method: "patch",
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(driver),
     });
 
     if (!response.ok) {
-      throw new Error("Unable to fetch driver");
+      throw new Error("Unable to update driver");
     }
 
     const result: DriverProps = await response.json();
@@ -98,10 +98,12 @@ export const deleteDriver = async (id: string) => {
       throw new Error("Unable to delete driver");
     }
 
-    return true;
+    const result: DriverProps = await response.json();
+
+    return result;
   } catch (error) {
     console.log(error, "deleteDriverError");
 
-    return false;
+    return null;
   }
 };
