@@ -45,7 +45,7 @@ export const createVehicle = async (vehicle: Exclude<VehicleProps, "id">) => {
 
   try {
     const response = await fetch(url, {
-      method: "post",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(vehicle),
     });
@@ -69,13 +69,13 @@ export const updateVehicle = async (vehicle: VehicleProps) => {
 
   try {
     const response = await fetch(url, {
-      method: "patch",
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(vehicle),
     });
 
     if (!response.ok) {
-      throw new Error("Unable to fetch vehicle");
+      throw new Error("Unable to update vehicle");
     }
 
     const result: VehicleProps = await response.json();
@@ -98,7 +98,9 @@ export const deleteVehicle = async (id: string) => {
       throw new Error("Unable to delete vehicle");
     }
 
-    return true;
+    const result: VehicleProps = await response.json();
+
+    return result;
   } catch (error) {
     console.log(error, "deleteVehicleError");
 
