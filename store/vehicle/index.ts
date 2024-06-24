@@ -13,6 +13,7 @@ import {
 import { VehicleStateProps } from "./types";
 
 const initialState: VehicleStateProps = {
+  activeVehicle: undefined,
   vehicles: [],
   isFetching: true,
   hasError: false,
@@ -22,6 +23,12 @@ export const VehicleSlice = createSlice({
   name: "vehicle",
   initialState,
   reducers: {
+    setActiveVehicle: (
+      state,
+      action: PayloadAction<VehicleProps | undefined>
+    ) => {
+      state.activeVehicle = action.payload;
+    },
     setVehicles: (state, action: PayloadAction<VehicleProps[]>) => {
       state.vehicles = action.payload;
     },
