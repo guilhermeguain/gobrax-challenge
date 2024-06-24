@@ -5,6 +5,7 @@ import { useAppDispatch } from "@/store";
 import { getVehicles } from "@/store/services";
 
 import { SelectedDriver } from "@/components/SelectedDriver";
+import { VehiclesActions } from "@/components/VehiclesActions";
 import { VehiclesTable } from "@/components/VehiclesTable";
 
 export default function VehiclesScreen() {
@@ -18,6 +19,7 @@ export default function VehiclesScreen() {
     <View style={styles.container}>
       <View style={styles.content}>
         <SelectedDriver />
+        <VehiclesActions />
         <VehiclesTable />
       </View>
     </View>
