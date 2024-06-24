@@ -2,9 +2,11 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import { driverReducer } from "./driver";
+import { vehicleReducer } from "./vehicle";
 
 const rootReducer = combineReducers({
   driver: driverReducer,
+  vehicle: vehicleReducer,
 });
 
 export function setupStore(preloadedState?: Partial<RootState>) {

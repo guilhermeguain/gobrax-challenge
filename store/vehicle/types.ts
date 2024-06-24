@@ -1,4 +1,4 @@
-import { VehicleProps } from "@/services/jsonServer/types/vehicle";
+import { VehicleProps } from "@/services/jsonServer/vehicle/types";
 
 export type VehicleStateProps = {
   vehicles: VehicleProps[];

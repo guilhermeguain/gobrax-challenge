@@ -3,7 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { DriverProps } from "@/services/jsonServer/driver/types";
 
-import { getDrivers } from "../services";
+import {
+  getDrivers,
+  createDriver,
+  updateDriver,
+  deleteDriver,
+} from "../services";
 
 import { DriverStateProps } from "./types";
 
@@ -30,21 +35,52 @@ export const DriverSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getDrivers.pending, (state) => {
-      console.log("getDrivers.pending");
       state.hasError = false;
       state.isFetching = true;
     });
     builder.addCase(getDrivers.rejected, (state) => {
-      console.log("getDrivers.rejected");
       state.hasError = true;
       state.isFetching = false;
     });
     builder.addCase(
       getDrivers.fulfilled,
       (state, action: PayloadAction<DriverProps[]>) => {
-        console.log("getDrivers.fulfilled");
         state.drivers = action.payload;
         state.isFetching = false;
+      }
+    );
+    builder.addCase(
+      createDriver.fulfilled,
+      (state, action: PayloadAction<DriverProps | null>) => {
+        const newDriver = action.payload;
+
+        if (newDriver) {
+          state.drivers = [...state.drivers, newDriver];
+        }
+      }
+    );
+    builder.addCase(
+      updateDriver.fulfilled,
+      (state, action: PayloadAction<DriverProps | null>) => {
+        const updatedDriver = action.payload;
+
+        if (updatedDriver) {
+          state.drivers = state.drivers.map((driver) => {
+            const isUpdated = driver.id === updatedDriver?.id;
+
+            return isUpdated ? updatedDriver : driver;
+          });
+        }
+      }
+    );
+    builder.addCase(
+      deleteDriver.fulfilled,
+      (state, action: PayloadAction<DriverProps | null>) => {
+        const removedDriver = action.payload;
+
+        state.drivers = state.drivers.filter(
+          (driver) => driver.id !== removedDriver?.id
+        );
       }
     );
   },

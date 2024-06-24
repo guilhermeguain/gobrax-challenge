@@ -3,7 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { VehicleProps } from "@/services/jsonServer/vehicle/types";
 
-import { getVehicles } from "../services";
+import {
+  getVehicles,
+  createVehicle,
+  updateVehicle,
+  deleteVehicle,
+} from "../services";
 
 import { VehicleStateProps } from "./types";
 
@@ -13,8 +18,8 @@ const initialState: VehicleStateProps = {
   hasError: false,
 };
 
-export const DriverSlice = createSlice({
-  name: "driver",
+export const VehicleSlice = createSlice({
+  name: "vehicle",
   initialState,
   reducers: {
     setVehicles: (state, action: PayloadAction<VehicleProps[]>) => {
@@ -23,26 +28,57 @@ export const DriverSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getVehicles.pending, (state) => {
-      console.log("getVehicles.pending");
       state.hasError = false;
       state.isFetching = true;
     });
     builder.addCase(getVehicles.rejected, (state) => {
-      console.log("getVehicles.rejected");
       state.hasError = true;
       state.isFetching = false;
     });
     builder.addCase(
       getVehicles.fulfilled,
       (state, action: PayloadAction<VehicleProps[]>) => {
-        console.log("getVehicles.fulfilled");
         state.vehicles = action.payload;
         state.isFetching = false;
+      }
+    );
+    builder.addCase(
+      createVehicle.fulfilled,
+      (state, action: PayloadAction<VehicleProps | null>) => {
+        const newVehicle = action.payload;
+
+        if (newVehicle) {
+          state.vehicles = [...state.vehicles, newVehicle];
+        }
+      }
+    );
+    builder.addCase(
+      updateVehicle.fulfilled,
+      (state, action: PayloadAction<VehicleProps | null>) => {
+        const updatedVehicle = action.payload;
+
+        if (updatedVehicle) {
+          state.vehicles = state.vehicles.map((driver) => {
+            const isUpdated = driver.id === updatedVehicle?.id;
+
+            return isUpdated ? updatedVehicle : driver;
+          });
+        }
+      }
+    );
+    builder.addCase(
+      deleteVehicle.fulfilled,
+      (state, action: PayloadAction<VehicleProps | null>) => {
+        const removedVehicle = action.payload;
+
+        state.vehicles = state.vehicles.filter(
+          (driver) => driver.id !== removedVehicle?.id
+        );
       }
     );
   },
 });
 
-export const DriverActions = DriverSlice.actions;
+export const VehicleActions = VehicleSlice.actions;
 
-export const driverReducer = DriverSlice.reducer;
+export const vehicleReducer = VehicleSlice.reducer;
