@@ -1,12 +1,42 @@
 import { useState, useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
+import { useMediaQuery } from "responsive-native";
 import { DataTable } from "react-native-paper";
 
 import { useAppSelector } from "@/store";
 
+import { When } from "@/components/shared/When";
+
 import { Row } from "./components/Row";
 
 export const DriversTable = () => {
+  const isDesktop = useMediaQuery({
+    minBreakpoint: "md",
+  });
+
+  return (
+    <>
+      <When value={!isDesktop}>
+        <ScrollView horizontal>
+          <Table />
+        </ScrollView>
+      </When>
+      <When value={isDesktop}>
+        <Table />
+      </When>
+    </>
+  );
+};
+
+export const styles = StyleSheet.create({
+  table: {
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: "#e7e0ec",
+  },
+});
+
+const Table = () => {
   const { drivers } = useAppSelector((state) => state.driver);
 
   const [page, setPage] = useState<number>(0);
@@ -47,11 +77,3 @@ export const DriversTable = () => {
     </DataTable>
   );
 };
-
-export const styles = StyleSheet.create({
-  table: {
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: "#e7e0ec",
-  },
-});

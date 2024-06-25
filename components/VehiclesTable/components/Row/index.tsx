@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { Text } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { DataTable, Checkbox } from "react-native-paper";
 
 import { VehicleProps } from "@/services/jsonServer/vehicle/types";
@@ -34,11 +34,13 @@ export const Row = (vehicle: VehicleProps) => {
   return (
     <DataTable.Row key={vehicle.id}>
       <DataTable.Cell>
-        <Checkbox
-          status={status}
-          onPress={() => handleVehicleSelect(vehicle)}
-        />
-        <Text>{vehicle.id}</Text>
+        <View style={styles.cell}>
+          <Checkbox
+            status={status}
+            onPress={() => handleVehicleSelect(vehicle)}
+          />
+          <Text>{vehicle.id}</Text>
+        </View>
       </DataTable.Cell>
       <DataTable.Cell>
         <Text>{vehicle.brand}</Text>
@@ -52,3 +54,11 @@ export const Row = (vehicle: VehicleProps) => {
     </DataTable.Row>
   );
 };
+
+const styles = StyleSheet.create({
+  cell: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
+});

@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { Text } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import { DataTable, Checkbox } from "react-native-paper";
 
 import { DriverProps } from "@/services/jsonServer/driver/types";
@@ -33,8 +33,13 @@ export const Row = (driver: DriverProps) => {
   return (
     <DataTable.Row key={driver.id}>
       <DataTable.Cell>
-        <Checkbox status={status} onPress={() => handleDriverSelect(driver)} />
-        <Text>{driver.id}</Text>
+        <View style={styles.cell}>
+          <Checkbox
+            status={status}
+            onPress={() => handleDriverSelect(driver)}
+          />
+          <Text>{driver.id}</Text>
+        </View>
       </DataTable.Cell>
       <DataTable.Cell>
         <Text>{driver.name}</Text>
@@ -48,3 +53,11 @@ export const Row = (driver: DriverProps) => {
     </DataTable.Row>
   );
 };
+
+const styles = StyleSheet.create({
+  cell: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
+});
