@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: SelectedDriver renders correctly 1`] = `
+<View
+  style={
+    {
+      "alignItems": "flex-end",
+    }
+  }
+>
+  <View
+    style={{}}
+  >
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "gap": 8,
+        }
+      }
+    >
+      <Text>
+        Selecionado:
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "gap": 8,
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Motorista:
+      </Text>
+      <Text
+        testID="activeDriverName"
+      />
+    </View>
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "gap": 8,
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Veículo:
+      </Text>
+    </View>
+  </View>
+</View>
+`;
