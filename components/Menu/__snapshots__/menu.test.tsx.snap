@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: Menu renders correctly 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "flexDirection": "row",
+      "gap": 32,
+    }
+  }
+>
+  <Text
+    href="/"
+    onPress={[Function]}
+    role="link"
+    style={
+      {
+        "color": "#000",
+        "fontWeight": "bold",
+      }
+    }
+  >
+    <Text>
+      Motoristas
+    </Text>
+  </Text>
+  <Text
+    href="/vehicles"
+    onPress={[Function]}
+    role="link"
+    style={
+      {
+        "color": "#000",
+        "fontWeight": "bold",
+      }
+    }
+  >
+    <Text>
+      Veículos
+    </Text>
+  </Text>
+</View>
+`;
