@@ -120,21 +120,21 @@ export const VehiclesActions = () => {
         </Snackbar>
       </Portal>
       <View style={styles.container}>
-        <Button
+        <IconButton
+          icon="plus"
+          iconColor={MD3Colors.neutralVariant20}
           mode="contained"
+          size={20}
           onPress={() => setActiveModal("create")}
-          textColor="#000"
-        >
-          Adicionar veículo
-        </Button>
+        />
         <When value={!!activeVehicle}>
-          <Button
+          <IconButton
+            icon="pencil"
+            iconColor={MD3Colors.neutralVariant20}
             mode="contained"
+            size={20}
             onPress={() => setActiveModal("update")}
-            textColor="#000"
-          >
-            Editar veículo
-          </Button>
+          />
           <IconButton
             icon="trash-can"
             iconColor={MD3Colors.error50}
@@ -152,7 +152,7 @@ export const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 16,
+    gap: 8,
     minHeight: 48,
   },
   modal: {

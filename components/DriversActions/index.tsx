@@ -148,21 +148,21 @@ export const DriversActions = () => {
         </Snackbar>
       </Portal>
       <View style={styles.container}>
-        <Button
+        <IconButton
+          icon="plus"
+          iconColor={MD3Colors.neutralVariant20}
           mode="contained"
+          size={20}
           onPress={() => setActiveModal("create")}
-          textColor="#000"
-        >
-          Adicionar motorista
-        </Button>
+        />
         <When value={!!activeDriver}>
-          <Button
+          <IconButton
+            icon="pencil"
+            iconColor={MD3Colors.neutralVariant20}
             mode="contained"
+            size={20}
             onPress={() => setActiveModal("update")}
-            textColor="#000"
-          >
-            Editar motorista
-          </Button>
+          />
           <IconButton
             icon="trash-can"
             iconColor={MD3Colors.error50}
@@ -180,7 +180,7 @@ export const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 16,
+    gap: 8,
     minHeight: 48,
   },
   modal: {
