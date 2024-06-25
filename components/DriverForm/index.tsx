@@ -64,6 +64,7 @@ export const DriverForm = ({
               label="Nome*"
               error={!!error}
               style={styles.input}
+              onChangeText={rest.onChange}
               {...rest}
             />
           )}
@@ -82,6 +83,7 @@ export const DriverForm = ({
                 label="Documento*"
                 error={!!error}
                 style={styles.input}
+                onChangeText={rest.onChange}
                 {...rest}
               />
               <HelperText type="error" visible={!!error}>

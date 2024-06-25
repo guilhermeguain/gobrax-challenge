@@ -49,6 +49,7 @@ export const VehicleForm = ({
               label="Marca*"
               error={!!error}
               style={styles.input}
+              onChangeText={rest.onChange}
               {...rest}
             />
           )}
@@ -67,6 +68,7 @@ export const VehicleForm = ({
                 label="Placa*"
                 error={!!error}
                 style={styles.input}
+                onChangeText={rest.onChange}
                 {...rest}
               />
               <HelperText type="error" visible={!!error}>
