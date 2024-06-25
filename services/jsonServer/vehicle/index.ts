@@ -40,17 +40,19 @@ export const getVehicles = async () => {
   }
 };
 
-export const createVehicle = async ({
-  id,
-  ...vehicle
-}: Exclude<VehicleProps, "id">) => {
+export const createVehicle = async (vehicle: Omit<VehicleProps, "id">) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/vehicles`;
+
+  const payload = {
+    brand: vehicle.brand,
+    plate: vehicle.plate,
+  };
 
   try {
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(vehicle),
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {

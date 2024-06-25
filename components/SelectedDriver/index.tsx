@@ -7,7 +7,8 @@ import { When } from "@/components/shared/When";
 export const SelectedDriver = () => {
   const { activeDriver } = useAppSelector((state) => state.driver);
 
-  const vehicle = activeDriver?.vehicles[0];
+  const vehicles = activeDriver?.vehicles;
+  const vehicle = vehicles?.[0] ? vehicles[0] : undefined;
   const isValidVehicle = !!vehicle?.brand && !!vehicle.plate;
 
   return (

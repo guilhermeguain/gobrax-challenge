@@ -1,7 +1,7 @@
 import { DriverProps } from "./types";
 
 export const getDriver = async (id: string) => {
-  const url = `${process.env.EXPO_PUBLIC_API_URL}/drivers/${id}`;
+  const url = `${process.env.EXPO_PUBLIC_API_URL}/drivers/${id}?_embed=vehicles`;
 
   try {
     const response = await fetch(url);
@@ -21,7 +21,7 @@ export const getDriver = async (id: string) => {
 };
 
 export const getDrivers = async () => {
-  const url = `${process.env.EXPO_PUBLIC_API_URL}/drivers/`;
+  const url = `${process.env.EXPO_PUBLIC_API_URL}/drivers?_embed=vehicles`;
 
   try {
     const response = await fetch(url);
@@ -40,17 +40,21 @@ export const getDrivers = async () => {
   }
 };
 
-export const createDriver = async ({
-  id,
-  ...driver
-}: Exclude<DriverProps, ["id"]>) => {
+export const createDriver = async (
+  driver: Omit<DriverProps, "id" | "vehicles">
+) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/drivers`;
+
+  const payload = {
+    name: driver.name,
+    document: driver.document,
+  };
 
   try {
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(driver),
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
@@ -67,14 +71,20 @@ export const createDriver = async ({
   }
 };
 
-export const updateDriver = async (driver: DriverProps) => {
+export const updateDriver = async (driver: Omit<DriverProps, "vehicles">) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/drivers/${driver.id}`;
+
+  const payload = {
+    id: driver.id,
+    name: driver.name,
+    document: driver.document,
+  };
 
   try {
     const response = await fetch(url, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(driver),
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {

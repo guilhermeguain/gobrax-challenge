@@ -9,7 +9,12 @@ import { VehicleActions } from "@/store/vehicle";
 
 export const Row = (vehicle: VehicleProps) => {
   const dispatch = useAppDispatch();
+  const { drivers } = useAppSelector((state) => state.driver);
   const { activeVehicle } = useAppSelector((state) => state.vehicle);
+
+  const relatedDriver = drivers.find(
+    (driver) => driver.id === vehicle.driverId
+  );
 
   const status = useMemo(
     () => (activeVehicle?.id === vehicle.id ? "checked" : "unchecked"),
@@ -40,6 +45,9 @@ export const Row = (vehicle: VehicleProps) => {
       </DataTable.Cell>
       <DataTable.Cell>
         <Text>{vehicle.plate}</Text>
+      </DataTable.Cell>
+      <DataTable.Cell>
+        <Text>{relatedDriver?.name}</Text>
       </DataTable.Cell>
     </DataTable.Row>
   );

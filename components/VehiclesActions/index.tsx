@@ -36,7 +36,7 @@ export const VehiclesActions = () => {
 
   const handleVehicleCreateSuccess = useCallback(
     (vehicle: VehicleFormSchemaProps) => {
-      dispatch(createVehicle(vehicle));
+      dispatch(createVehicle({ ...vehicle, driverId: "" }));
       setActiveModal(undefined);
       setSnackBar({
         message: "Veículo adicionado com sucesso!",

@@ -26,6 +26,7 @@ export const VehiclesTable = () => {
         <DataTable.Title>ID</DataTable.Title>
         <DataTable.Title>Marca</DataTable.Title>
         <DataTable.Title>Placa</DataTable.Title>
+        <DataTable.Title>Motorista</DataTable.Title>
       </DataTable.Header>
 
       {vehicles?.slice(from, to).map((vehicle) => (

@@ -12,19 +12,42 @@ export const getDrivers = createAsyncThunk("driver/getDrivers", async () => {
 
 export const createDriver = createAsyncThunk(
   "driver/createDriver",
-  async (driver: Exclude<DriverProps, ["id"]>) => {
+  async ({
+    vehicles,
+    ...driver
+  }: Omit<DriverProps, "id">): Promise<DriverProps | null> => {
     const response = await jsonServer.createDriver(driver);
 
-    return response;
+    const driverId = response?.id;
+
+    if (driverId) {
+      vehicles.forEach(async (vehicle) => {
+        await jsonServer.updateVehicle({ ...vehicle, driverId });
+      });
+    }
+
+    return response ? { ...response, vehicles } : null;
   }
 );
 
 export const updateDriver = createAsyncThunk(
   "driver/updateDriver",
-  async (driver: DriverProps) => {
+  async ({ vehicles, ...driver }: DriverProps): Promise<DriverProps | null> => {
     const response = await jsonServer.updateDriver(driver);
 
-    return response;
+    const driverId = response?.id;
+
+    if (driverId) {
+      vehicles.forEach(async (vehicle) => {
+        await jsonServer.updateVehicle(vehicle);
+      });
+    }
+
+    const ownerVehicles = vehicles.filter(
+      (vehicle) => vehicle.driverId === driver.id
+    );
+
+    return response ? { ...response, vehicles: ownerVehicles } : null;
   }
 );
 

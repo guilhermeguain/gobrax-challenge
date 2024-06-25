@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 
-import { useAppDispatch } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { getVehicles } from "@/store/services";
 
 import { SelectedDriver } from "@/components/SelectedDriver";
@@ -11,9 +11,11 @@ import { VehiclesTable } from "@/components/VehiclesTable";
 export default function VehiclesScreen() {
   const dispatch = useAppDispatch();
 
+  const { drivers } = useAppSelector((state) => state.driver);
+
   useEffect(() => {
     dispatch(getVehicles());
-  }, [dispatch]);
+  }, [dispatch, drivers]);
 
   return (
     <View style={styles.container}>

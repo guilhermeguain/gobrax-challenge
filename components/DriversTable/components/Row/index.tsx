@@ -16,7 +16,7 @@ export const Row = (driver: DriverProps) => {
     [activeDriver]
   );
 
-  const hasVehicles = driver.vehicles?.length;
+  const hasVehicles = driver?.vehicles?.length;
 
   const hasVehiclesText = hasVehicles ? "Sim" : "Não";
 

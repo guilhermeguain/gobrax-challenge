@@ -15,12 +15,7 @@ import { VehicleProps } from "@/services/jsonServer/vehicle/types";
 
 import { useAppDispatch, useAppSelector } from "@/store";
 import { DriverActions } from "@/store/driver";
-import {
-  createDriver,
-  deleteDriver,
-  updateDriver,
-  updateVehicle,
-} from "@/store/services";
+import { createDriver, deleteDriver, updateDriver } from "@/store/services";
 
 import { When } from "@/components/shared/When";
 
@@ -44,12 +39,8 @@ export const DriversActions = () => {
   });
 
   const handleDriverCreateSuccess = useCallback(
-    (driver: DriverFormSchemaProps) => {
+    ({ id, ...driver }: DriverFormSchemaProps) => {
       dispatch(createDriver(driver));
-
-      driver.vehicles.forEach((vehicle) => {
-        dispatch(updateVehicle({ ...vehicle, driverId: driver.id }));
-      });
 
       setActiveModal(undefined);
       setSnackBar({
@@ -70,17 +61,28 @@ export const DriversActions = () => {
 
   const handleDriverUpdateSuccess = useCallback(
     (driver: DriverFormSchemaProps) => {
-      dispatch(updateDriver(driver));
+      const previousVehicles = activeDriver?.vehicles;
+      const removedVehicles =
+        previousVehicles?.filter(
+          (previousVehicle) => !driver.vehicles.includes(previousVehicle)
+        ) ?? [];
 
-      if (!driver.vehicles.length) {
-        activeDriver?.vehicles.forEach((vehicle) => {
-          dispatch(updateVehicle({ ...vehicle, driverId: undefined }));
-        });
-      } else {
-        driver.vehicles.forEach((vehicle) => {
-          dispatch(updateVehicle({ ...vehicle, driverId: driver.id }));
-        });
-      }
+      const updatedVehicles: VehicleProps[] = !driver.vehicles.length
+        ? removedVehicles.map((removedVehicle) => ({
+            ...removedVehicle,
+            driverId: "",
+          }))
+        : driver?.vehicles.map((vehicle) => ({
+            ...vehicle,
+            driverId: driver.id,
+          }));
+
+      const updatedDriver: DriverProps = {
+        ...driver,
+        vehicles: updatedVehicles,
+      };
+
+      dispatch(updateDriver(updatedDriver));
 
       setActiveModal(undefined);
       setSnackBar({
@@ -89,7 +91,7 @@ export const DriversActions = () => {
         color: "green",
       });
     },
-    [dispatch, setActiveModal, setSnackBar]
+    [dispatch, activeDriver, setActiveModal, setSnackBar]
   );
 
   const handleDriverDelete = useCallback(() => {
