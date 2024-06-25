@@ -19,12 +19,12 @@ export const SelectedDriver = () => {
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Motorista:</Text>
-          <Text>{activeDriver?.name}</Text>
+          <Text testID="activeDriverName">{activeDriver?.name}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Veículo:</Text>
           <When value={isValidVehicle}>
-            <Text>{`${vehicle?.brand} - ${vehicle?.plate}`}</Text>
+            <Text testID="activeDriverVehicle">{`${vehicle?.brand} - ${vehicle?.plate}`}</Text>
           </When>
         </View>
       </View>
