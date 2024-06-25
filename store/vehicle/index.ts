@@ -70,6 +70,8 @@ export const VehicleSlice = createSlice({
 
             return isUpdated ? updatedVehicle : driver;
           });
+
+          state.activeVehicle = updatedVehicle;
         }
       }
     );

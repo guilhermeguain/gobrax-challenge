@@ -1,5 +1,6 @@
 export type VehicleProps = {
-  id?: string;
+  id: string;
   brand: string;
   plate: string;
+  driverId?: string;
 };

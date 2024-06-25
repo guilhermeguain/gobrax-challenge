@@ -20,7 +20,10 @@ export const VehicleForm = ({
 
   const methods = useForm<VehicleFormSchemaProps>({
     resolver: zodResolver(vehicleFormSchema),
-    defaultValues,
+    defaultValues: {
+      id: "",
+      ...defaultValues,
+    },
   });
 
   const { control, handleSubmit } = methods;

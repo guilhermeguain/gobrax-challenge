@@ -40,7 +40,10 @@ export const getDrivers = async () => {
   }
 };
 
-export const createDriver = async (driver: Exclude<DriverProps, ["id"]>) => {
+export const createDriver = async ({
+  id,
+  ...driver
+}: Exclude<DriverProps, ["id"]>) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/drivers`;
 
   try {

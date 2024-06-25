@@ -21,11 +21,22 @@ export const DriverForm = ({
 
   const [selectedVehicles, setSelectedVehicles] = useState<
     { _id: string; value: string }[]
-  >([]);
+  >(() => {
+    const defaultVehicles = defaultValues?.vehicles ?? [];
+
+    return defaultVehicles?.map((vehicle) => ({
+      _id: vehicle?.id ?? "",
+      value: `${vehicle?.brand} (${vehicle?.plate})`,
+    }));
+  });
 
   const methods = useForm<DriverFormSchemaProps>({
     resolver: zodResolver(driverFormSchema),
-    defaultValues,
+    defaultValues: {
+      id: "",
+      vehicles: [],
+      ...defaultValues,
+    },
   });
 
   const { control, setValue, resetField, handleSubmit } = methods;
@@ -81,10 +92,12 @@ export const DriverForm = ({
         />
         <Controller
           control={control}
-          name="vehicle"
-          render={({ field: { value: vehicle }, fieldState: { error } }) => {
+          name="vehicles"
+          render={({ field: { value }, fieldState: { error } }) => {
+            const vehicle = value?.[0];
+
             const valueText = vehicle
-              ? `${vehicle.brand} (${vehicle.plate})`
+              ? `${vehicle?.brand} (${vehicle?.plate})`
               : "";
 
             return (
@@ -104,9 +117,9 @@ export const DriverForm = ({
                     );
 
                     if (selectedVehicle) {
-                      setValue("vehicle", selectedVehicle);
+                      setValue("vehicles", [selectedVehicle]);
                     } else {
-                      resetField("vehicle");
+                      resetField("vehicles", { defaultValue: [] });
                     }
 
                     setSelectedVehicles(selectedList);

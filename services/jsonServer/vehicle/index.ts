@@ -40,7 +40,10 @@ export const getVehicles = async () => {
   }
 };
 
-export const createVehicle = async (vehicle: Exclude<VehicleProps, "id">) => {
+export const createVehicle = async ({
+  id,
+  ...vehicle
+}: Exclude<VehicleProps, "id">) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/vehicles`;
 
   try {

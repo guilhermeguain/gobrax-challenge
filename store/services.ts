@@ -45,8 +45,8 @@ export const getVehicles = createAsyncThunk("vehicle/getVehicles", async () => {
 
 export const createVehicle = createAsyncThunk(
   "driver/createVehicle",
-  async (driver: Exclude<VehicleProps, ["id"]>) => {
-    const response = await jsonServer.createVehicle(driver);
+  async (vehicle: Exclude<VehicleProps, "id">) => {
+    const response = await jsonServer.createVehicle(vehicle);
 
     return response;
   }

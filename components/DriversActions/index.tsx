@@ -15,7 +15,12 @@ import { VehicleProps } from "@/services/jsonServer/vehicle/types";
 
 import { useAppDispatch, useAppSelector } from "@/store";
 import { DriverActions } from "@/store/driver";
-import { createDriver, deleteDriver, updateDriver } from "@/store/services";
+import {
+  createDriver,
+  deleteDriver,
+  updateDriver,
+  updateVehicle,
+} from "@/store/services";
 
 import { When } from "@/components/shared/When";
 
@@ -39,16 +44,13 @@ export const DriversActions = () => {
   });
 
   const handleDriverCreateSuccess = useCallback(
-    ({ name, document, vehicle }: DriverFormSchemaProps) => {
-      const vehicles: VehicleProps[] = vehicle ? [vehicle] : [];
-
-      const driver: Exclude<DriverProps, "id"> = {
-        name,
-        document,
-        vehicles,
-      };
-
+    (driver: DriverFormSchemaProps) => {
       dispatch(createDriver(driver));
+
+      driver.vehicles.forEach((vehicle) => {
+        dispatch(updateVehicle({ ...vehicle, driverId: driver.id }));
+      });
+
       setActiveModal(undefined);
       setSnackBar({
         message: "Motorista adicionado com sucesso!",
@@ -67,17 +69,19 @@ export const DriversActions = () => {
   );
 
   const handleDriverUpdateSuccess = useCallback(
-    ({ id, name, document, vehicle }: DriverFormSchemaProps) => {
-      const vehicles: VehicleProps[] = vehicle ? [vehicle] : [];
-
-      const driver: Exclude<DriverProps, "id"> = {
-        id,
-        name,
-        document,
-        vehicles,
-      };
-
+    (driver: DriverFormSchemaProps) => {
       dispatch(updateDriver(driver));
+
+      if (!driver.vehicles.length) {
+        activeDriver?.vehicles.forEach((vehicle) => {
+          dispatch(updateVehicle({ ...vehicle, driverId: undefined }));
+        });
+      } else {
+        driver.vehicles.forEach((vehicle) => {
+          dispatch(updateVehicle({ ...vehicle, driverId: driver.id }));
+        });
+      }
+
       setActiveModal(undefined);
       setSnackBar({
         message: "Motorista atualizado com sucesso!",

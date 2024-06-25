@@ -70,6 +70,8 @@ export const DriverSlice = createSlice({
 
             return isUpdated ? updatedDriver : driver;
           });
+
+          state.activeDriver = updatedDriver;
         }
       }
     );
