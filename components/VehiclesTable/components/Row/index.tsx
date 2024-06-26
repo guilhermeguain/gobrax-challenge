@@ -18,7 +18,7 @@ export const Row = (vehicle: VehicleProps) => {
 
   const status = useMemo(
     () => (activeVehicle?.id === vehicle.id ? "checked" : "unchecked"),
-    [activeVehicle]
+    [vehicle, activeVehicle]
   );
 
   const handleVehicleSelect = useCallback(

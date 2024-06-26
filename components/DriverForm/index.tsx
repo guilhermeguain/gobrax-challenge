@@ -45,7 +45,7 @@ export const DriverForm = ({
 
   useEffect(() => {
     dispatch(getVehicles());
-  }, [getVehicles]);
+  }, [dispatch]);
 
   return (
     <FormProvider {...methods}>

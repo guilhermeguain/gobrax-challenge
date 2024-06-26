@@ -13,7 +13,7 @@ export const Row = (driver: DriverProps) => {
 
   const status = useMemo(
     () => (activeDriver?.id === driver.id ? "checked" : "unchecked"),
-    [activeDriver]
+    [driver, activeDriver]
   );
 
   const hasVehicles = driver?.vehicles?.length;

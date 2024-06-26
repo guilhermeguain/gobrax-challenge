@@ -3,11 +3,11 @@ import { View, StyleSheet } from "react-native";
 import {
   Modal,
   Portal,
-  Button,
   IconButton,
   MD3Colors,
   Snackbar,
 } from "react-native-paper";
+import { FieldErrors } from "react-hook-form";
 
 import { useAppDispatch, useAppSelector } from "@/store";
 import { createVehicle, deleteVehicle, updateVehicle } from "@/store/services";
@@ -18,7 +18,6 @@ import { VehicleForm } from "@/components/VehicleForm";
 import { VehicleFormSchemaProps } from "@/components/VehicleForm/types";
 
 import { SnackBarProps } from "./types";
-import { FieldErrors } from "react-hook-form";
 
 export const VehiclesActions = () => {
   const dispatch = useAppDispatch();

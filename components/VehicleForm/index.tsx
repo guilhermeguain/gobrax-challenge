@@ -30,7 +30,7 @@ export const VehicleForm = ({
 
   useEffect(() => {
     dispatch(getVehicles());
-  }, [getVehicles]);
+  }, [dispatch]);
 
   return (
     <FormProvider {...methods}>
