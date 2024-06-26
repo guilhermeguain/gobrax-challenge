@@ -8,12 +8,12 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://localhost:3000"
+        "EXPO_PUBLIC_API_URL": "https://nice-woodcock-rightly.ngrok-free.app"
       }
     },
     "production": {
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://localhost:3000"
+        "EXPO_PUBLIC_API_URL": "https://nice-woodcock-rightly.ngrok-free.app"
       }
     }
   }
